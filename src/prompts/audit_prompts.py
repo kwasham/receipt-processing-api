@@ -1,0 +1,79 @@
+"""Audit prompts following the notebook pattern."""
+
+# Basic prompt (for comparison/fallback)
+AUDIT_PROMPT_BASIC = """
+Evaluate this receipt data to determine if it need to be audited based on the following
+criteria:
+
+1. NOT_TRAVEL_RELATED:
+   - IMPORTANT: For this criterion, travel-related expenses include but are not limited
+   to: gas, hotel, airfare, or car rental.
+   - If the receipt IS for a travel-related expense, set this to FALSE.
+   - If the receipt is NOT for a travel-related expense (like office supplies), set this
+   to TRUE.
+   - In other words, if the receipt shows FUEL/GAS, this would be FALSE because gas IS
+   travel-related.
+
+2. AMOUNT_OVER_LIMIT: The total amount exceeds $50
+
+3. MATH_ERROR: The math for computing the total doesn't add up (line items don't sum to
+   total)
+
+4. HANDWRITTEN_X: There is an "X" in the handwritten notes
+
+For each criterion, determine if it is violated (true) or not (false). Provide your
+reasoning for each decision, and make a final determination on whether the receipt needs
+auditing. A receipt needs auditing if ANY of the criteria are violated.
+
+Return a structured response with your evaluation.
+"""
+
+# Improved prompt with examples (from notebook)
+AUDIT_PROMPT_IMPROVED = """
+Evaluate this receipt data to determine if it need to be audited based on the following
+criteria:
+
+1. NOT_TRAVEL_RELATED:
+   - IMPORTANT: For this criterion, travel-related expenses include but are not limited
+   to: gas, hotel, airfare, or car rental.
+   - If the receipt IS for a travel-related expense, set this to FALSE.
+   - If the receipt is NOT for a travel-related expense (like office supplies), set this
+   to TRUE.
+   - In other words, if the receipt shows FUEL/GAS, this would be FALSE because gas IS
+   travel-related.
+   - Travel-related expenses include anything that could be reasonably required for
+   business-related travel activities. For instance, an employee using a personal
+   vehicle might need to change their oil; if the receipt is for an oil change or the
+   purchase of oil from an auto parts store, this would be acceptable and counts as a
+   travel-related expense.
+
+2. AMOUNT_OVER_LIMIT: The total amount exceeds $50
+
+3. MATH_ERROR: The math for computing the total doesn't add up (line items don't sum to
+   total)
+   - Add up the price and quantity of each line item to get the subtotal
+   - Add tax to the subtotal to get the total
+   - If the total doesn't match the amount on the receipt, this is a math error
+   - If the total is off by no more than $0.01, this is NOT a math error
+
+4. HANDWRITTEN_X: There is an "X" in the handwritten notes
+
+For each criterion, determine if it is violated (true) or not (false). Provide your
+reasoning for each decision, and make a final determination on whether the receipt needs
+auditing. A receipt needs auditing if ANY of the criteria are violated.
+
+Note that violation of a criterion means that it is `true`. If any of the above four
+values are `true`, then the receipt needs auditing (`needs_audit` should be `true`: it
+functions as a boolean OR over all four criteria).
+
+If the receipt contains non-travel expenses, then NOT_TRAVEL_RELATED should be `true`
+and therefore NEEDS_AUDIT must also be set to `true`. IF THE RECEIPT LISTS ITEMS THAT
+ARE NOT TRAVEL-RELATED, THEN IT MUST BE AUDITED. Here are some example inputs to
+demonstrate how you should act:
+
+<examples>
+{examples}
+</examples>
+
+Return a structured response with your evaluation.
+"""

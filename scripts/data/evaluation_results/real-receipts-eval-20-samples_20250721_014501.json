@@ -1,0 +1,27 @@
+{
+  "eval_id": "eval_687de1ebe7d4819186692f4f8ee37f6f",
+  "run_id": "evalrun_687de1ec51f48191a3a69a985951f67b",
+  "report_url": "https://platform.openai.com/evaluations/eval_687de1ebe7d4819186692f4f8ee37f6f?project_id=proj_PHq30sn53Cn5IBEw1ICTd4hK&run_id=evalrun_687de1ec51f48191a3a69a985951f67b",
+  "dashboard_url": "https://platform.openai.com/evals/eval_687de1ebe7d4819186692f4f8ee37f6f",
+  "metrics": {
+    "total": 20,
+    "accuracy": 0.95,
+    "precision": 1.0,
+    "recall": 0.9,
+    "f1_score": 0.9473684210526316,
+    "fp_rate": 0.0,
+    "fn_rate": 0.1,
+    "true_positives": 9,
+    "false_positives": 0,
+    "true_negatives": 10,
+    "false_negatives": 1,
+    "ai_system_cost": 250000.0,
+    "current_system_cost": 380000.0,
+    "perfect_system_cost": 100000.0,
+    "potential_savings": 130000.0
+  },
+  "dataset_size": 20,
+  "status": "success",
+  "eval_type": "openai_evals_api",
+  "note": "Full OpenAI Evals integration - Check report_url for detailed results"
+}
